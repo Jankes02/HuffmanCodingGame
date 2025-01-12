@@ -24,10 +24,9 @@ public class WordManager : MonoBehaviour
 
     private string GetRandomWord()
     {
-        List<string> keys = new List<string>(GlobalVariables.wordsWithOptimalCoding.Keys);
-        string randomKey = keys[UnityEngine.Random.Range(0, keys.Count)];
+        string randomWord = GlobalVariables.words[UnityEngine.Random.Range(0, GlobalVariables.words.Length)];
 
-        return randomKey;
+        return randomWord;
     }
 
     public void GenerateCells(string word)
