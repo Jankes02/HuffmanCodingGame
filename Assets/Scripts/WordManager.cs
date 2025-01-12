@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
 using System;
+using UnityEngine.SceneManagement;
 
 public class WordManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class WordManager : MonoBehaviour
     public float verticalSpacing = 7f;
     public TextMeshProUGUI wordText;
     public Button checkButton;
+    public Button nextButton;
     public TextMeshProUGUI resultText;
     public string word; 
 
@@ -20,6 +22,12 @@ public class WordManager : MonoBehaviour
         word = GetRandomWord();
         GenerateCells(word);
         checkButton.onClick.AddListener(GatherLetterValues);
+        nextButton.onClick.AddListener(ChangeScene);
+    }
+
+    private void ChangeScene()
+    {
+        //SceneManager.LoadScene(sceneName);
     }
 
     private string GetRandomWord()
@@ -107,11 +115,13 @@ public class WordManager : MonoBehaviour
         {
             resultText.text = "CORRECT!";
             resultText.color = Color.green;
+            nextButton.interactable = true;
         }
         else
         {
             resultText.text = "WRONG!";
             resultText.color = Color.red;
+            nextButton.interactable = false;
         }
     }
 
