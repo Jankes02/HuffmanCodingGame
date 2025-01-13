@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading;
 
 public class TreeVerification : MonoBehaviour
 {
@@ -17,19 +18,12 @@ public class TreeVerification : MonoBehaviour
     private int toleratedLength;
     private Dictionary<char, string> codes;
     private int solutionLength;
-    private int mistakes = 0;
     private int score;
+    public Button nextButton;
 
     void Start()
     {
-        // counts = Variables.letterCounts;
-        counts = new Dictionary<char, int>()
-        {
-            { 'a', 1 },
-            { 'b', 2 },
-            { 'c', 3 },
-            { 'd', 4 }
-        };
+        counts = GlobalVariables.letterValues;
 
         foreach (var entry in counts)
             for (int i = 0; i < entry.Value; i++)
@@ -48,18 +42,17 @@ public class TreeVerification : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e.Message);
-            mistakes++;
             resultText.text = "TREE STRUCTURE WRONG";
             resultText.color = Color.red;
+            nextButton.interactable = false;
             return;
         }
 
         if (codes.Count < counts.Count)
         {
-            mistakes++;
             resultText.text = "CHARACTERS MISSING";
             resultText.color = Color.red;
+            nextButton.interactable = false;
             return;
         }
 
@@ -71,17 +64,21 @@ public class TreeVerification : MonoBehaviour
             resultText.color = Color.green;
             score = toleratedLength - solutionLength;
 
-            // Variables.score += score;
-            // yield return new WaitForSeconds(3);
-            // SceneManager.LoadScene(Stage3);
-            // obliczyc punkty, zapisac kody, przeniesc do etapu 3
+            GlobalVariables.letterCodes = codes;
+            nextButton.interactable = true;
         }
         else
         {
-            mistakes++;
             resultText.text = "ENCODED STRING TOO LONG";
             resultText.color = Color.red;
+            nextButton.interactable = false;
         }
+    }
+
+    public void ChangeScene()
+    {
+        GlobalVariables.score += GetUserScore();
+        SceneManager.LoadScene("Stage3");
     }
 
     public char GetTextFromNode(NodeObj node)
@@ -92,7 +89,7 @@ public class TreeVerification : MonoBehaviour
             if (textMesh.text == "")
                 return '\0';
 
-            return char.Parse(textMesh.text);
+            return char.Parse(textMesh.text.ToUpper());
         }
         return '\0';
     }
@@ -170,5 +167,14 @@ public class TreeVerification : MonoBehaviour
         GenerateCodes(root, "");
 
         return string.Concat(word.Select(c => codes[c]));
+    }
+
+    public int GetUserScore()
+    {
+        int difference = Math.Abs(optimalLength - solutionLength);
+
+        int userScore = Math.Max(0, 100 - (5 * difference));
+
+        return userScore;
     }
 }

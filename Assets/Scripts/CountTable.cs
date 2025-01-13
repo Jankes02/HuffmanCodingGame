@@ -9,14 +9,7 @@ public class CountTable : MonoBehaviour
     private Dictionary<char, int> counts;
     void Start()
     {
-        // counts = Variables.letterCounts;
-        counts = new Dictionary<char, int>()
-        {
-            { 'a', 1 },
-            { 'b', 2 },
-            { 'c', 3 },
-            { 'd', 4 }
-        };
+        counts = GlobalVariables.letterValues;
 
         var sortedCounts = counts.OrderByDescending(entry => entry.Value);
 

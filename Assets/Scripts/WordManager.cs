@@ -19,7 +19,8 @@ public class WordManager : MonoBehaviour
 
     private void Start()
     {
-        word = GetRandomWord();
+        word = GetRandomWord().ToUpper();
+        GlobalVariables.word = word;
         GenerateCells(word);
         checkButton.onClick.AddListener(GatherLetterValues);
         nextButton.onClick.AddListener(ChangeScene);
@@ -27,7 +28,7 @@ public class WordManager : MonoBehaviour
 
     private void ChangeScene()
     {
-        //SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("Stage2");
     }
 
     private string GetRandomWord()
@@ -155,19 +156,5 @@ public class WordManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    public int GetUserScore(string userCoding)
-    {
-        string optimalCoding = "111101110101101011010";
-
-        int optimalLength = optimalCoding.Length;
-        int userLength = userCoding.Length;
-
-        int difference = Math.Abs(optimalLength - userLength);
-
-        int userScore = Math.Max(0, 100 - (5 * difference));
-
-        return userScore;
     }
 }
