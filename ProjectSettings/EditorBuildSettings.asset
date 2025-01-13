@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Stage1.unity
-    guid: 6f587b92b182beb458606209dec3f364
+    path: Assets/Scenes/LettersTable.unity
+    guid: 737a647c23cec1d44bf3470748352970
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: a3291b4dbef3d9b49953df80087939a8
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: 74d4bb9f02893e042b78e8505b621a4d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
